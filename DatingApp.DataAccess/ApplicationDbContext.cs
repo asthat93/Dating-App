@@ -12,9 +12,11 @@ namespace DatingApp.DataAccess
            : base(options)
         {
         }
-
+    
         public DbSet<Values> Value { get; set; }
 
         public DbSet<Users> Users { get; set; }
+
+        public DbSet<Photo> Photo { get; set; }
     }
 }

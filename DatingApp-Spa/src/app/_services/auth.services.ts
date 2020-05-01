@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 
 @Injectable({
@@ -12,6 +13,11 @@ export class AuthService {
 
   }
 
+  jwtHelperServicetoken = new JwtHelperService();
+
+  decodedToken: any;
+
+
   //pipe is used to manipulate the response based on bussiness logi ,
   //here we get observable return type so we use the map keyword to map it our response
 
@@ -22,6 +28,8 @@ export class AuthService {
           const user = response;
           if (user) {
             localStorage.setItem('token', user.token);
+            this.decodedToken = this.jwtHelperServicetoken.decodeToken(user.token);
+            
           }
 
         })
@@ -30,5 +38,10 @@ export class AuthService {
 
   register(model: any) {
     return this.http.post('http://localhost:5000/api/auth/' + 'register', model);
+  }
+
+  loggedIn() {
+    const token = localStorage.getItem('token');
+    return !this.jwtHelperServicetoken.isTokenExpired(token);
   }
 }

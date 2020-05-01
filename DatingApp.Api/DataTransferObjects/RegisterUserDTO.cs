@@ -12,6 +12,7 @@ namespace DatingApp.Api.DataTransferObjects
         public string Username { get; set; }
 
         [Required]
+        [StringLength(8, MinimumLength = 4, ErrorMessage = "Length should be between 4 to 8")]
         public string Password { get; set; }
     }
 }
